@@ -38,7 +38,7 @@ public class JobConfig {
         TaskletStepBuilder taskletStepBuilder = stepBuilder.tasklet(new Tasklet() {
             @Override
             public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                System.out.println("第一步");
+                System.out.println("第一步 one");
                 return RepeatStatus.FINISHED;
             }
         });
