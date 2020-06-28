@@ -18,18 +18,25 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 
 // 一個工作(Job)有很多個步驟(Step)
-@Configuration
-public class JobConfig {
+
+/**
+ * 一個 Job 只能執行一次，BATCH_JOB_EXECUTION.EXIT_CODE，
+ * 如果是 COMPLETED 為完成
+ * NOOP 為已執行過或沒有 Step 設定
+ * UNKNOWN 為執行中
+ */
+//@Configuration
+public class Hello {
     @Resource
     private JobBuilderFactory jobBuilderFactory;
 
     @Resource
     private StepBuilderFactory stepBuilderFactory;
 
-    @Bean
+//    @Bean
     public Job helloSpringBatch() {
         JobBuilder jobBuilder = jobBuilderFactory.get("helloBatch");
-        SimpleJobBuilder simpleJobBuilder = jobBuilder.start(step1()); //.next(step2());
+        SimpleJobBuilder simpleJobBuilder = jobBuilder.start(step1()).next(step2());
         return simpleJobBuilder.build();
     }
 
@@ -45,8 +52,12 @@ public class JobConfig {
         return taskletStepBuilder.build();
     }
 
-//    private Step step2() {
-//        StepBuilder stepBuilder = stepBuilderFactory.get("s2");
-//        stepBuilder.chunk();
-//    }
+    private Step step2() {
+        StepBuilder stepBuilder = stepBuilderFactory.get("s2");
+        TaskletStepBuilder taskletStepBuilder = stepBuilder.tasklet((stepContribution, chunkContext) -> {
+            System.out.println("第二步 two");
+            return RepeatStatus.FINISHED;
+        });
+        return taskletStepBuilder.build();
+    }
 }
