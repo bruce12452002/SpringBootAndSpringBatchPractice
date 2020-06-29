@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.flow.FlowExecutionStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.*;
+import java.util.stream.Stream;
 
 @SpringBootTest
 class SpringBootAndSpringBatchPracticeApplicationTests {
@@ -42,4 +44,5 @@ class SpringBootAndSpringBatchPracticeApplicationTests {
             }
         }
     }
+
 }

@@ -23,7 +23,7 @@ public class FlowTest {
     private StepBuilderFactory stepBuilderFactory;
 
 //    @Bean
-    public Job jc3() {
+    public Job ft() {
         JobBuilder jobBuilder = jobBuilderFactory.get("FlowTest");
         FlowJobBuilder flowJobBuilder = jobBuilder.start(getFlow()).next(step3()).end();
         return flowJobBuilder.build();

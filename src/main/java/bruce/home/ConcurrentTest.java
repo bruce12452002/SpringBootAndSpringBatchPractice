@@ -14,7 +14,7 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
 import javax.annotation.Resource;
 
-@Configuration
+//@Configuration
 public class ConcurrentTest {
     @Resource
     private JobBuilderFactory jobBuilderFactory;
@@ -22,11 +22,11 @@ public class ConcurrentTest {
     @Resource
     private StepBuilderFactory stepBuilderFactory;
 
-    @Bean
-    public Job jc3() {
+//    @Bean
+    public Job ct() {
         JobBuilder jobBuilder = jobBuilderFactory.get("ConcurrentTest");
         return jobBuilder.start(getFlow1())
-                .split(new SimpleAsyncTaskExecutor())// split 可以將 getFlow1() 和 getFlow2() 分別併發執行
+                .split(new SimpleAsyncTaskExecutor()) // split 可以將 getFlow1() 和 getFlow2() 分別併發執行
                 .add(getFlow2())
                 .end().build();
     }

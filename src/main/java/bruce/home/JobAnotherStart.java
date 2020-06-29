@@ -21,7 +21,7 @@ public class JobAnotherStart {
     private StepBuilderFactory stepBuilderFactory;
 
 //    @Bean
-    public Job jc2() {
+    public Job jas() {
         FlowJobBuilder flowJobBuilder = jobBuilderFactory.get("JobAnotherStart")
                 .start(step1()).on(FlowExecutionStatus.COMPLETED.toString()).to(step2())
                 .from(step2()).on(FlowExecutionStatus.COMPLETED.toString()).to(step3()) // to 改 fail() 不會執行下一個 step；stopAndRestart(Step or Flow) 重啟動
