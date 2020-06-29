@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 
-@Configuration
+//@Configuration
 public class ChildJob1 {
     @Resource
     private JobBuilderFactory jobBuilderFactory;
@@ -18,7 +18,7 @@ public class ChildJob1 {
     @Resource
     private StepBuilderFactory stepBuilderFactory;
 
-    @Bean
+//    @Bean
     public Job cj1() {
         return jobBuilderFactory.get("ChildJob1")
                 .start(stepChild1()).build();

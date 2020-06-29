@@ -42,6 +42,7 @@ public class Hello {
 
     private Step step1() {
         StepBuilder stepBuilder = stepBuilderFactory.get("s1");
+        // StepBuilder 可以用 tasklet 和 chunk
         TaskletStepBuilder taskletStepBuilder = stepBuilder.tasklet(new Tasklet() {
             @Override
             public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {

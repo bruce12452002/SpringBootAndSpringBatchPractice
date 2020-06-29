@@ -16,7 +16,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.annotation.Resource;
 
-@Configuration
+//@Configuration
 public class ParentChildJobTest {
     @Resource
     private JobBuilderFactory jobBuilderFactory;
@@ -37,15 +37,15 @@ public class ParentChildJobTest {
     @Resource
     private JobLauncher jobLauncher;
 
-    @Bean
+//    @Bean
     public Job pct(JobRepository repository, PlatformTransactionManager transactionManager) {
-        return jobBuilderFactory.get("ParentChildJobTest")
+        return jobBuilderFactory.get("ParentChildJobTest") // 父 Job 才能執行子 Job，要在 application.properties 設定
                 .start(useChild1(repository, transactionManager))
                 .next(useChild2(repository, transactionManager))
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step useChild1(JobRepository repository, PlatformTransactionManager transactionManager) {
         return new JobStepBuilder(new StepBuilder("c1"))
                 .job(stepChild1)
@@ -55,7 +55,7 @@ public class ParentChildJobTest {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step useChild2(JobRepository repository, PlatformTransactionManager transactionManager) {
         return new JobStepBuilder(new StepBuilder("c2"))
                 .job(stepChild2)
