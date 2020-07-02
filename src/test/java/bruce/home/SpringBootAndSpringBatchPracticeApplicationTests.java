@@ -3,15 +3,18 @@ package bruce.home;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.util.Assert;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Arrays;
 
-//@SpringBootTest
+@SpringBootTest
 class SpringBootAndSpringBatchPracticeApplicationTests {
     @Value("${spring.datasource.driver-class-name}")
     private String driver;
@@ -24,6 +27,9 @@ class SpringBootAndSpringBatchPracticeApplicationTests {
 
     @Value("${spring.datasource.password}")
     private String password;
+
+    @javax.annotation.Resource
+    private DataSource dataSource;
 
     @Test
     void testDb4free() throws ClassNotFoundException, SQLException {
@@ -59,5 +65,31 @@ class SpringBootAndSpringBatchPracticeApplicationTests {
                 e.printStackTrace();
             }
         });
+    }
+
+    @Test
+    void testResources2() {
+        Resource[] re = new Resource[]{
+                new ClassPathResource("twelveAnimal1.txt"),
+                new ClassPathResource("twelveAnimal2.txt")
+        };
+
+        Arrays.stream(re).forEach(r -> {
+            try {
+                System.out.println("file=" + r.getURL().getFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @Test
+    void testAssert() {
+        Assert.notNull(null, "我錯了");
+    }
+
+    @Test
+    void testDataSource() {
+        System.out.println("xxxxxxxxxxxxxxxxxxx=" + dataSource);
     }
 }
