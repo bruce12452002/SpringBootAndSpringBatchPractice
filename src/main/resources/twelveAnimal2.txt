@@ -1,0 +1,7 @@
+id, name, price
+7, horse, 777
+8, sheep, 666
+9, monkey, 8859
+10, chicken, 2265
+11, dog, 54
+12, pig, 77

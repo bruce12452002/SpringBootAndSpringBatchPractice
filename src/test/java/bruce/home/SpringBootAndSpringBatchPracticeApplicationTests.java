@@ -3,10 +3,15 @@ package bruce.home;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
+import java.io.IOException;
 import java.sql.*;
+import java.util.Arrays;
 
-@SpringBootTest
+//@SpringBootTest
 class SpringBootAndSpringBatchPracticeApplicationTests {
     @Value("${spring.datasource.driver-class-name}")
     private String driver;
@@ -42,4 +47,17 @@ class SpringBootAndSpringBatchPracticeApplicationTests {
         }
     }
 
+    @Test
+    void testResources() throws IOException {
+        ResourcePatternResolver loader = new PathMatchingResourcePatternResolver();
+        Resource[] resources = loader.getResources("classpath*:/twelveAnimal*.txt");
+
+        Arrays.stream(resources).forEach(r -> {
+            try {
+                System.out.println("file=" + r.getURL().getFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }

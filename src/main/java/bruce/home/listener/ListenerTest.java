@@ -45,7 +45,7 @@ public class ListenerTest {
          * chunk listener 會在 chunk 前後執行；step 也一樣，有多個 listener，都會執行，誰寫在前面誰先執行
          */
         return stepBuilderFactory.get("stepListenTest")
-                .<String, Integer>chunk(2)// 每讀完 2 筆資料再處理，讀什麼由 reader 決定
+                .<String, Integer>chunk(2)// 每讀完 2 筆資料再處理，讀什麼由 reader 決定，最後一次不到或剛好是 2 筆的算最後一次
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())

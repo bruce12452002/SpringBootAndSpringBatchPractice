@@ -1,0 +1,7 @@
+id, name, price
+1, rat, 1024
+2, ox,78
+3, tiger, 877
+4, rabbit, 1258
+5, dragon, 999
+6, snake, 888

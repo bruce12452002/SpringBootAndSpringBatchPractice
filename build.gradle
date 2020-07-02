@@ -22,7 +22,10 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'org.springframework.batch:spring-batch-test'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+    runtimeOnly 'mysql:mysql-connector-java'
+    implementation 'org.springframework:spring-oxm'
+    implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.12'
+
 }
 
 test {
