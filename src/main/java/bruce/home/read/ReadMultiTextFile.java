@@ -19,7 +19,7 @@ import org.springframework.core.io.ClassPathResource;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Configuration
+//@Configuration
 public class ReadMultiTextFile {
     @Resource
     private JobBuilderFactory jobBuilderFactory;
@@ -30,7 +30,7 @@ public class ReadMultiTextFile {
     @Value("classpath*:/twelveAnimal*.txt")
     private org.springframework.core.io.Resource[] fileResources;
 
-    @Bean
+//    @Bean
     public Job rtf() {
         return jobBuilderFactory.get("job ReadMultiTextFile")
                 .start(step())
