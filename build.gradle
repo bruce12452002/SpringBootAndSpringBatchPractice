@@ -25,6 +25,8 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     implementation 'org.springframework:spring-oxm'
     implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.12'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.1'
+
 }
 
 test {

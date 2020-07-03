@@ -54,14 +54,19 @@ public class ReadXMLFile {
     private ItemReader<MyTable1> reader() {
         StaxEventItemReader<MyTable1> reader = new StaxEventItemReader<>();
         reader.setResource(new ClassPathResource("twelveAnimal.xml"));
-        reader.setFragmentRootElementName("animal"); // 不可寫 root 層
+        reader.setFragmentRootElementName("animal"); // root 的下層
 
         HashMap<String, Class<MyTable1>> map = new HashMap<>();
-        map.put("animal", MyTable1.class);
+        map.put("animal", MyTable1.class); // root 的下層
 
         XStreamMarshaller stream = new XStreamMarshaller();
         stream.setAliases(map);
         reader.setUnmarshaller(stream);
+        try {
+            reader.afterPropertiesSet();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return reader;
     }
 }
