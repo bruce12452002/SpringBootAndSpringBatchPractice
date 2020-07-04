@@ -33,7 +33,7 @@ public class ParameterTest implements StepExecutionListener {
                 .tasklet((contribution, chunkContext) -> {
                     /**
                      *  xxx 可在 Run configuration 的參數列表設定，如 xxx=abc，會存到 BATCH_JOB_EXECUTION_PARAMS 表裡
-                     *  ooo 是自己設定的，不會儲存到資料庫
+                     *  ooo 是寫在程式裡的，不會儲存到資料庫
                      */
                     System.out.println("xxx=" + map.get("xxx"));
                     System.out.println("ooo=" + map.get("ooo"));

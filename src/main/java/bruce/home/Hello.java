@@ -25,7 +25,7 @@ import javax.annotation.Resource;
  * NOOP 為已執行過或沒有 Step 設定
  * UNKNOWN 為執行中
  */
-//@Configuration
+@Configuration
 public class Hello {
     @Resource
     private JobBuilderFactory jobBuilderFactory;
@@ -33,7 +33,7 @@ public class Hello {
     @Resource
     private StepBuilderFactory stepBuilderFactory;
 
-//    @Bean
+    @Bean
     public Job helloSpringBatch() {
         JobBuilder jobBuilder = jobBuilderFactory.get("helloBatch");
         SimpleJobBuilder simpleJobBuilder = jobBuilder.start(step1()).next(step2());

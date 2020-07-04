@@ -1,56 +1,67 @@
-package bruce.home.read;
+package bruce.home.processor;
 
 import bruce.home.entity.MyTable1;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.batch.item.support.CompositeItemProcessor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 //@Configuration
-public class ReadTextFile {
+public class MyCompositItemProcessor {
     @Resource
     private JobBuilderFactory jobBuilderFactory;
 
     @Resource
     private StepBuilderFactory stepBuilderFactory;
 
-    //    @Bean
+//    @Bean
     public Job rf() {
-        return jobBuilderFactory.get("job ReadFile")
+        return jobBuilderFactory.get("job processor")
                 .start(step())
                 .build();
     }
 
     private Step step() {
-        return stepBuilderFactory.get("step ReadFile")
+        // 多個 processor() 只有最後一個會執行
+        return stepBuilderFactory.get("step processor")
                 .<MyTable1, MyTable1>chunk(5)
                 .reader(reader())
+                .processor(processor())
+//                .processor(proA())
+//                .processor(proB())
                 .writer(writer())
-
-                /**
-                 *  以 下為容錯的重試功能，chunk 才有
-                 *  必需 faultTolerant，才有 retry 可用，
-                 *  遇到什麼錯，重試幾次(reader writer processor)
-                 */
-                // .faultTolerant().retry(Exception.class).retryLimit(5)
-
-                /**
-                 *  以 下為容錯的跳過功能，chunk 才有
-                 *  必需 faultTolerant，才有 skip 可用，
-                 *  遇到什麼錯，略過幾次(reader writer processor)
-                 *  listener 要實現 SkipListener，如果想對跳過的資料做記錄可以用
-                 */
-                // .faultTolerant().skip(Exception.class).skipLimit(5).listener()
                 .build();
+    }
+
+    private ItemProcessor<MyTable1, MyTable1> processor() {
+        CompositeItemProcessor<MyTable1, MyTable1> process = new CompositeItemProcessor<>();
+        process.setDelegates(List.of(proA(), proB()));
+        return process;
+    }
+
+    private ItemProcessor<MyTable1, MyTable1> proA() {
+        return (MyTable1 item) -> {
+            item.setName(item.getName().toUpperCase());
+            return item;
+        };
+    }
+
+    private ItemProcessor<MyTable1, MyTable1> proB() {
+        // 只抓偶數的
+        return (MyTable1 item) -> ((item.getId() & 1) == 0) ? item : null;
     }
 
     private ItemWriter<MyTable1> writer() {

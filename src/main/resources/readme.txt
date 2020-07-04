@@ -10,3 +10,12 @@ DROP TABLE BATCH_JOB_EXECUTION;
 DROP TABLE BATCH_JOB_EXECUTION_SEQ;
 DROP TABLE BATCH_JOB_INSTANCE;
 DROP TABLE BATCH_JOB_SEQ;
+
+
+專案轉成 web：
+一、增加資料夾 src/main/webapp，裡面寫 html
+二、build.gradle 增加兩個
+  1. id 'war'
+  2.
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
